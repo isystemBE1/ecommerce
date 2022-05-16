@@ -11,7 +11,12 @@ class Timestamp(models.Model):
 
 
 class Category(Timestamp):
+    image = models.ImageField(upload_to='categories/', null=True)
     title = models.CharField(max_length=221)
+
+    @property
+    def normalize_title(self):
+        return self.title.replace(' ', '').lower()
 
     def __str__(self):
         return self.title
@@ -21,10 +26,23 @@ class Product(Timestamp):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=221)
     price = models.FloatField()
+    views = models.IntegerField(default=0)
+    mid_rate = models.FloatField(default=0)
     description = models.TextField()
 
     def __str__(self):
-        return self.name
+        return f'{self.id} | {self.name}'
+
+    @property
+    def get_mid_rate(self):
+        rates = self.rate_set.all()
+        mid = 0
+        try:
+            mid = sum([i for i in rates.rate])/rates.count()
+        except ZeroDivisionError:
+            pass
+        self.mid_rate = mid
+        return mid
 
 
 class ProductImage(Timestamp):
@@ -50,8 +68,6 @@ class Rate(Timestamp):
 
     def __str__(self):
         return f'rate of {self.user.username}'
-
-
 
 
 

@@ -38,10 +38,11 @@ class Product(Timestamp):
         rates = self.rate_set.all()
         mid = 0
         try:
-            mid = sum([i for i in rates.rate])/rates.count()
+            mid = sum([i.rate for i in rates])/rates.count()
         except ZeroDivisionError:
             pass
         self.mid_rate = mid
+        self.save()
         return mid
 
 
@@ -62,7 +63,7 @@ class Rate(Timestamp):
         (4, 4),
         (5, 5),
     )
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     rate = models.IntegerField(choices=RATE, default=0)
 

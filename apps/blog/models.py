@@ -13,6 +13,7 @@ class Post(models.Model):
     title = models.CharField(max_length=221)
     image = models.ImageField(upload_to='blog/')
     content = models.TextField()
+    tags = models.ManyToManyField(Tag)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

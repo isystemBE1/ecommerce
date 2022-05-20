@@ -9,8 +9,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ogani | Template</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap"
-          rel="stylesheet">
+{#    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap"#}
+{#          rel="stylesheet">#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet"
           href="{% static 'css/bootstrap.min.css' %}"
@@ -36,6 +37,14 @@
             }))
         }(w, d, 0, "script");
     })(window, document);</script>
+    <style>
+        .latest-product pre {
+            margin-bottom: 0px;
+        }
+        .blog__sidebar__recent__item__pic {
+            width: 120px;
+        }
+    </style>
 </head>
 <body>
 
@@ -81,7 +90,7 @@
                     <li><a href="blog-details.html">Blog Details</a></li>
                 </ul>
             </li>
-            <li><a href="blog.html">Blog</a></li>
+            <li><a href="{% url 'blog:list' %}">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
     </nav>

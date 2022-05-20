@@ -141,34 +141,38 @@
                         <h4>Latest Products</h4>
                         <div class="latest-product__slider owl-carousel">
 
-                                    <div class="latest-prdouct__slider__item">
-                                        {% for latest_product in latest_products|slice:'0:3' %}
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="{{ latest_product.productimage_set.all.first.image.url }}"
-                                                     alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>{{ latest_product.name }}</h6>
-                                                <span>UZS {{ latest_product.price }}</span>
-                                            </div>
-                                        </a>
-                                        {% endfor %}
-                                    </div>
-                                    <div class="latest-prdouct__slider__item">
-                                        {% for latest_product in latest_products|slice:'3:' %}
-                                        <a href="#" class="latest-product__item">
-                                            <div class="latest-product__item__pic">
-                                                <img src="{{ latest_product.productimage_set.all.first.image.url }}"
-                                                     alt="">
-                                            </div>
-                                            <div class="latest-product__item__text">
-                                                <h6>{{ latest_product.name }}</h6>
-                                                <span>UZS {{ latest_product.price }}</span>
-                                            </div>
-                                        </a>
-                                        {% endfor %}
-                                    </div>
+                            <div class="latest-prdouct__slider__item">
+                                {% for latest_product in latest_products|slice:'0:3' %}
+                                    <a href="#" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img src="{{ latest_product.productimage_set.all.first.image.url }}"
+                                                 alt="">
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>{{ latest_product.name }}</h6>
+                                            <span>UZS {{ latest_product.price }}</span>
+                                            <pre><code><i class="fa fa-eye"></i> : {{ latest_product.views }}</code></pre>
+                                            <pre><code><i class="fa fa-star-half-o"></i> : {{ latest_product.get_mid_rate }}</code></pre>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                            <div class="latest-prdouct__slider__item">
+                                {% for latest_product in latest_products|slice:'3:' %}
+                                    <a href="#" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img src="{{ latest_product.productimage_set.all.first.image.url }}"
+                                                 alt="">
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>{{ latest_product.name }}</h6>
+                                            <span>UZS {{ latest_product.price }}</span>
+                                            <pre><code><i class="fa fa-eye"></i> : {{ latest_product.views }}</code></pre>
+                                            <pre><code><i class="fa fa-star-half-o"></i> : {{ latest_product.get_mid_rate }}</code></pre>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
 
                         </div>
                     </div>
@@ -178,62 +182,35 @@
                         <h4>Top Rated Products</h4>
                         <div class="latest-product__slider owl-carousel">
                             <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-1.jpg.pagespeed.ic.LGjna46RhG.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-2.jpg.pagespeed.ic.A6ypl4JLGO.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-3.jpg.pagespeed.ic.mf_XcdZ7zd.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
+                                {% for top_rated_product in top_rated_products|slice:'0:3' %}
+                                    <a href="" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img src="{{ top_rated_product.productimage_set.first.image.url }}" alt="">
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>{{ top_rated_product.name }}</h6>
+                                            <span>UZS {{ top_rated_product.price }}</span>
+                                            <pre><code><i class="fa fa-eye"></i> : {{ top_rated_product.views }}</code></pre>
+                                            <pre><code><i class="fa fa-star-half-o"></i> : {{ top_rated_product.get_mid_rate }}</code></pre>
+                                        </div>
+                                    </a>
+                                {% endfor %}
                             </div>
                             <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-1.jpg.pagespeed.ic.LGjna46RhG.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-2.jpg.pagespeed.ic.A6ypl4JLGO.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-3.jpg.pagespeed.ic.mf_XcdZ7zd.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
+
+                                {% for top_rated_product in top_rated_products|slice:'3:' %}
+                                    <a href="" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img src="{{ top_rated_product.productimage_set.first.image.url }}" alt="">
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>{{ top_rated_product.name }}</h6>
+                                            <span>UZS {{ top_rated_product.price }}</span>
+                                            <pre><code><i class="fa fa-eye"></i> : {{ top_rated_product.views }}</code></pre>
+                                            <pre><code><i class="fa fa-star-half-o"></i> : {{ top_rated_product.get_mid_rate }}</code></pre>
+                                        </div>
+                                    </a>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -243,62 +220,34 @@
                         <h4>Review Products</h4>
                         <div class="latest-product__slider owl-carousel">
                             <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-1.jpg.pagespeed.ic.LGjna46RhG.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-2.jpg.pagespeed.ic.A6ypl4JLGO.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-3.jpg.pagespeed.ic.mf_XcdZ7zd.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
+                                {% for top_viewed_product in top_viewed_products|slice:'0:3' %}
+                                    <a href="" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img src="{{ top_viewed_product.productimage_set.first.image.url }}" alt="">
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>{{ top_viewed_product.name }}</h6>
+                                            <span>UZS {{ top_viewed_product.price }}</span>
+                                            <pre><code><i class="fa fa-eye"></i> : {{ top_viewed_product.views }}</code></pre>
+                                            <pre><code><i class="fa fa-star-half-o"></i> : {{ top_viewed_product.get_mid_rate }}</code></pre>
+                                        </div>
+                                    </a>
+                                {% endfor %}
                             </div>
                             <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-1.jpg.pagespeed.ic.LGjna46RhG.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-2.jpg.pagespeed.ic.A6ypl4JLGO.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/xlp-3.jpg.pagespeed.ic.mf_XcdZ7zd.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
+                                {% for top_viewed_product in top_viewed_products|slice:'3:' %}
+                                    <a href="" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img src="{{ top_viewed_product.productimage_set.first.image.url }}" alt="">
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>{{ top_viewed_product.name }}</h6>
+                                            <span>UZS {{ top_viewed_product.price }}</span>
+                                            <pre><code><i class="fa fa-eye"></i> : {{ top_viewed_product.views }}</code></pre>
+                                            <pre><code><i class="fa fa-star-half-o"></i> : {{ top_viewed_product.get_mid_rate }}</code></pre>
+                                        </div>
+                                    </a>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -318,51 +267,23 @@
                 </div>
             </div>
             <div class="row">
+                {% for blog_latest_item in blog_latest %}
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="blog__item">
                         <div class="blog__item__pic">
-                            <img src="img/blog/xblog-1.jpg.pagespeed.ic.LxmSdcElIm.jpg" alt="">
+                            <img src="{{ blog_latest_item.image.url }}" alt="">
                         </div>
                         <div class="blog__item__text">
                             <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
+                                <li><i class="fa fa-calendar-o"></i> {{ blog_latest_item.created_at }}</li>
                                 <li><i class="fa fa-comment-o"></i> 5</li>
                             </ul>
-                            <h5><a href="#">Cooking tips make cooking simple</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
+                            <h5><a href="#">{{ blog_latest_item.title }}</a></h5>
+                            <p>{{ blog_latest_item.content|slice:':100' }} ...</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="img/blog/xblog-2.jpg.pagespeed.ic.BEPbl29gdJ.jpg" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="#">6 ways to prepare breakfast for 30</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6">
-                    <div class="blog__item">
-                        <div class="blog__item__pic">
-                            <img src="img/blog/xblog-3.jpg.pagespeed.ic.cmlGgG7W6t.jpg" alt="">
-                        </div>
-                        <div class="blog__item__text">
-                            <ul>
-                                <li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-                                <li><i class="fa fa-comment-o"></i> 5</li>
-                            </ul>
-                            <h5><a href="#">Visit the clean farm in the US</a></h5>
-                            <p>Sed quia non numquam modi tempora indunt ut labore et dolore magnam aliquam quaerat </p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

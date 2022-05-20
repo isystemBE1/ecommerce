@@ -7,8 +7,13 @@ class ProductImageInline(admin.TabularInline):
     extra = 1
 
 
+class RateInline(admin.TabularInline):
+    model = Rate
+    extra = 1
+
+
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductImageInline]
+    inlines = [ProductImageInline, RateInline]
 
 
 admin.site.register(Category)

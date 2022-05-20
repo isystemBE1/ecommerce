@@ -44,6 +44,23 @@
         .blog__sidebar__recent__item__pic {
             width: 120px;
         }
+        .featured__item__pic__hover li button {
+            font-size: 16px;
+            color: #1c1c1c;
+            height: 40px;
+            width: 40px;
+            line-height: 40px;
+            text-align: center;
+            border: 1px solid #ebebeb;
+            background: #fff;
+            display: block;
+            border-radius: 50%;
+            -webkit-transition: all , .5s;
+            -moz-transition: all , .5s;
+            -ms-transition: all , .5s;
+            -o-transition: all , .5s;
+            transition: all , .5s;
+        }
     </style>
 </head>
 <body>
@@ -280,6 +297,33 @@
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 <script>
+
+    // Add wishlist
+    $('.add-wishlist').on('click', function () {
+        var _pid = $(this).data('product');
+        var _pobj = $(this);
+        // alert(_pid)
+
+        // Ajax
+        $.ajax({
+            url: "/carts/add-wishlist/",
+            data: {
+                product: _pid
+            },
+            dataType: 'json',
+            success: function (res){
+                console.log(res);
+                if(res.success === true) {
+                    _pobj.addClass('disabled').removeClass('add-wishlist');
+                } else {
+                    alert('Already in your wishlist')
+                }
+            }
+
+        })
+    })
+
+
     window.dataLayer = window.dataLayer || [];
 
     function gtag() {

@@ -16,8 +16,8 @@ class WishList(models.Model):
 
 
 class Cart(models.Model):
-    client = models.OneToOneField(User, on_delete=models.CASCADE)
-    cart_total_price = models.FloatField(null=True)
+    client = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_ordered = models.BooleanField(default=False)
 
     @property
     def get_cart_items(self):
@@ -28,7 +28,7 @@ class Cart(models.Model):
     @property
     def get_cart_total(self):
         cart_items = self.cart_items.all()
-        total = sum([item.total for item in cart_items])
+        total = sum([item.get_total for item in cart_items])
         return total
 
     def __str__(self):
@@ -39,9 +39,12 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.SET_NULL, null=True, related_name='cart_items')
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(null=True, default=1)
-    total = models.FloatField(null=True, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def get_total(self):
+        return self.quantity * self.product.price
 
 
 class Order(models.Model):
@@ -57,19 +60,9 @@ class Order(models.Model):
     phone = models.CharField(max_length=21)
     address = models.CharField(max_length=221)
     note = models.TextField(null=True, blank=True)
-    order_total_price = models.FloatField(null=True)
     status = models.IntegerField(choices=STATUS, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'order of {self.client} | {self.transaction_id}'
 
-
-def cart_item_post_save(sender, instance, created, *args, **kwargs):
-    if created:
-        total_price = instance.quantity * instance.product.price
-        instance.total = total_price
-        instance.save()
-
-
-post_save.connect(cart_item_post_save, sender=CartItem)

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Product, Category, ProductImage, Rate
 from apps.blog.models import Post, Tag
+from ..carts.models import WishList
 
 
 def index(request):
@@ -9,7 +10,7 @@ def index(request):
     latest_products = products[:6]
     top_rated_products = products.order_by('-mid_rate')[:6]
     top_viewed_products = products.order_by('-views')[:6]
-
+    wishlist = WishList.objects.filter(user=request.user)
     blog_latest = Post.objects.order_by('-id')[:3]
 
     ctx = {

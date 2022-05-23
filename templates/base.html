@@ -1,4 +1,10 @@
 {% load static %}
+{% load cart_tag %}
+
+{% get_user_cart as cart %}
+{% get_user_wishlist as wlist_products_id %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +69,7 @@
     <div class="humberger__menu__cart">
         <ul>
             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span></span></a></li>
         </ul>
         <div class="header__cart__price">item: <span>$150.00</span></div>
     </div>
@@ -184,7 +190,15 @@
                                 <span>0</span>
                             {% endif %}
                         </a></li>
-                        <li><a href="/cart/"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        <li>
+                            <a href="/cart/"><i class="fa fa-shopping-bag"></i>
+                                {% if request.user.is_authenticated %}
+                                    <span>{{ cart.get_cart_items }}</span>
+                                {% else %}
+                                    <span>0</span>
+                                {% endif %}
+                            </a>
+                        </li>
                     </ul>
                     <div class="header__cart__price">item: <span>$150.00</span></div>
                 </div>
@@ -308,17 +322,35 @@
             dataType: 'json',
             success: function (res) {
                 console.log(res) // 1 === '1'
-                if(res.success === true) {
-                    _vm.removeClass('add-wishlist').addClass('disabled')
-                    alert(res.product  + ' saved')
-                    location.reload()
+                if (res.success === true) {
+                    // _vm.removeClass('add-wishlist').addClass('disabled');
+                    alert(res.product + ' saved');
                 } else {
-                    alert(res.product  + ' already in your wishlist')
+                    alert(res.product + ' removed');
                 }
+                location.reload();
+            }
+        });
+    });
+
+    $('.add-cart').on('click', function () {
+        let _pid = $(this).data('product')
+        // alert(_pid)
+
+        // Ajax
+        $.ajax({
+            url: '/carts/add-cart/',
+            data: {
+                _pid
+            },
+            method: 'get',
+            dataType: 'json',
+            success: function (res) {
+                alert(res.product + ' added to cart')
+                location.reload()
             }
         })
     })
-
 
     window.dataLayer = window.dataLayer || [];
 

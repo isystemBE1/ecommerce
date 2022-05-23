@@ -9,9 +9,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ogani | Template</title>
 
-{#    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap"#}
-{#          rel="stylesheet">#}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {#    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap"#}
+    {#          rel="stylesheet">#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <link rel="stylesheet"
           href="{% static 'css/bootstrap.min.css' %}"
@@ -41,6 +43,7 @@
         .latest-product pre {
             margin-bottom: 0px;
         }
+
         .blog__sidebar__recent__item__pic {
             width: 120px;
         }
@@ -173,7 +176,14 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
-                        <li><a href="/wishlist/"><i class="fa fa-heart"></i> <span>1</span></a></li>
+                        <li><a href="{% url 'carts:my-wishlist' %}"><i class="fa fa-heart"></i>
+
+                            {% if request.user.is_authenticated %}
+                                <span>{{ request.user.wishlist_set.all.count }}</span>
+                            {% else %}
+                                <span>0</span>
+                            {% endif %}
+                        </a></li>
                         <li><a href="/cart/"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
                     </ul>
                     <div class="header__cart__price">item: <span>$150.00</span></div>
@@ -268,6 +278,7 @@
     </div>
 </footer>
 
+
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js%2bjquery.nice-select.min.js.pagespeed.jc.08NHUfMhux.js' %}"></script>
 <script>eval(mod_pagespeed_ND6iIrfFHB);</script>
@@ -280,6 +291,35 @@
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 <script>
+
+
+    $('.add-wishlist').on('click', function () {
+        let _pid = $(this).data('product')
+        let _vm = $(this)
+
+        // alert(_pid)
+
+        // Ajax
+        $.ajax({
+            url: '/carts/add-wishlist/',
+            data: {
+                _pid
+            },
+            dataType: 'json',
+            success: function (res) {
+                console.log(res) // 1 === '1'
+                if(res.success === true) {
+                    _vm.removeClass('add-wishlist').addClass('disabled')
+                    alert(res.product  + ' saved')
+                    location.reload()
+                } else {
+                    alert(res.product  + ' already in your wishlist')
+                }
+            }
+        })
+    })
+
+
     window.dataLayer = window.dataLayer || [];
 
     function gtag() {

@@ -26,7 +26,7 @@ urlpatterns = [
     # local urls
     path('', include('apps.products.urls', namespace='products')),
     path('carts/', include('apps.carts.urls', namespace='carts')),
-    path('contacts/', include('apps.contacts.urls', namespace='contacts')),
+    path('contact/', include('apps.contacts.urls', namespace='contacts')),
     path('blog/', include('apps.blog.urls', namespace='blog')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   # /media/account/eshmat/user.png

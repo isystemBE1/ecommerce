@@ -1,4 +1,6 @@
 {% load static %}
+{% load cart_tag %}
+{% get_cart as cart %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,9 +11,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ogani | Template</title>
 
-{#    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap"#}
-{#          rel="stylesheet">#}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {#    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap"#}
+    {#          rel="stylesheet">#}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <link rel="stylesheet"
           href="{% static 'css/bootstrap.min.css' %}"
@@ -41,9 +48,11 @@
         .latest-product pre {
             margin-bottom: 0px;
         }
+
         .blog__sidebar__recent__item__pic {
             width: 120px;
         }
+
         .featured__item__pic__hover li button {
             font-size: 16px;
             color: #1c1c1c;
@@ -55,12 +64,21 @@
             background: #fff;
             display: block;
             border-radius: 50%;
-            -webkit-transition: all , .5s;
-            -moz-transition: all , .5s;
-            -ms-transition: all , .5s;
-            -o-transition: all , .5s;
-            transition: all , .5s;
+            -webkit-transition: all, .5s;
+            -moz-transition: all, .5s;
+            -ms-transition: all, .5s;
+            -o-transition: all, .5s;
+            transition: all, .5s;
         }
+        header.header {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        header.header .header__sub {
+            background-color: #fff;
+        }
+
     </style>
 </head>
 <body>
@@ -141,7 +159,7 @@
                                     href="https://preview.colorlib.com/cdn-cgi/l/email-protection" class="__cf_email__"
                                     data-cfemail="620a070e0e0d22010d0e0d100e0b004c010d0f">[email&#160;protected]</a>
                             </li>
-                            <li>Free Shipping for all Order of $99</li>
+                            <li>Toshkent sh. Mirzo ulugbek</li>
                         </ul>
                     </div>
                 </div>
@@ -170,7 +188,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container header__sub">
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
@@ -190,10 +208,33 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
-                        <li><a href="/wishlist/"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                        <li><a href="/cart/"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        <li>
+                            <a href="{% url 'carts:my-wishlist' %}"><i class="fa fa-heart"></i>
+                            {% if request.user.is_authenticated %}
+                                <span>{{ request.user.wishlist_set.all.count }}</span>
+                            {% else %}
+                                <span>0</span>
+                            {% endif %}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'carts:my-cart' %}"><i class="fa fa-shopping-bag"></i>
+                            {% if request.user.is_authenticated %}
+                                <span>{{ cart.get_cart_items }}</span>
+                            {% else %}
+                                <span>0</span>
+                            {% endif %}
+                            </a>
+                        </li>
+
                     </ul>
-                    <div class="header__cart__price">item: <span>$150.00</span></div>
+                    <div class="header__cart__price">price:
+                        {% if request.user.is_authenticated %}
+                            <span>UZS {{ cart.get_cart_total }}</span>
+                        {% else %}
+                            <span>UZS 0.00</span>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -302,6 +343,7 @@
     $('.add-wishlist').on('click', function () {
         var _pid = $(this).data('product');
         var _pobj = $(this);
+        var _wishlist_count = $('.wishlist-counter').val();
         // alert(_pid)
 
         // Ajax
@@ -311,17 +353,79 @@
                 product: _pid
             },
             dataType: 'json',
-            success: function (res){
+            success: function (res) {
                 console.log(res);
-                if(res.success === true) {
+                if (res.success === true) {
+                    console.log(_wishlist_count)
                     _pobj.addClass('disabled').removeClass('add-wishlist');
+                    alert(res.product  + ' saved');
+                    location.reload();
                 } else {
-                    alert('Already in your wishlist')
+                    alert(res.product  + ' removed your wishlist');
+                    location.reload();
                 }
             }
 
-        })
-    })
+        });
+    });
+
+
+    // remove wishlist
+    $('.remove-wishlist').on('click', function () {
+        var _pid = $(this).data('product');
+        var _pobj = $(this);
+        // alert(_pid)
+
+        // Ajax
+        $.ajax({
+            url: "/carts/my-wishlist/",
+            method: 'post',
+            data: {
+                product: _pid,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+            },
+            dataType: 'json',
+            success: function (res) {
+                console.log(res);
+                if (res.success === true) {
+                    alert(res.product  + ' remove from your wishlist')
+                    location.reload()
+                } else {
+                    alert(res.product  + ' something get wrong')
+                }
+            }
+
+        });
+    });
+
+
+    // Add cart
+    $('.add-cart').on('click', function () {
+        var _pid = $(this).data('product');
+        var _pobj = $(this);
+        // alert(_pid)
+
+        // Ajax
+        $.ajax({
+            url: "/carts/add-cart",
+            data: {
+                product: _pid
+            },
+            dataType: 'json',
+            success: function (res) {
+                console.log(res);
+                if (res.success === true) {
+                    // _pobj.addClass('disabled').removeClass('add-cart');
+                    alert(res.product  + ' added to cart');
+                    location.reload();
+                } else {
+                    alert(res.product  + ' removed from your cart');
+                    location.reload();
+                }
+            }
+
+        });
+    });
 
 
     window.dataLayer = window.dataLayer || [];

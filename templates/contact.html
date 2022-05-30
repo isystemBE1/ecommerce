@@ -79,7 +79,7 @@
                 <div class="contact__widget">
                     <span class="icon_phone"></span>
                     <h4>Phone</h4>
-                    <p>+01-3-8888-6868</p>
+                        <p><a href="tel:+998991110180">+99899 111 01 80</a></p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 text-center">
@@ -151,5 +151,14 @@
         </form>
     </div>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $('.header__menu>ul>li').removeClass('active');
+        $('.contact_page').addClass('active');
+
+    </script>
 
 {% endblock %}

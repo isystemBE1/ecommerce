@@ -8,7 +8,10 @@ register = template.Library()
 def get_user_cart(context):
     request = context['request']
     user = request.user
-    cart = Cart.objects.get(client=user, is_ordered=False)
+    try:
+        cart = Cart.objects.get(client=user, is_ordered=False)
+    except:
+        cart = []
     return cart
 
 
@@ -17,7 +20,10 @@ def get_user_cart(context):
 def get_user_wishlist(context):
     request = context['request']
     user = request.user
-    wlist = WishList.objects.filter(user=user)
+    try:
+        wlist = WishList.objects.filter(user=user)
+    except:
+        wlist = []
     wlist_products = [product.product.id for product in wlist]
     return wlist_products
 

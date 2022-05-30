@@ -32,7 +32,7 @@ class Cart(models.Model):
         return total
 
     def __str__(self):
-        return f'order of {self.client}'
+        return f'order of {self.client} (id: {self.id})'
 
 
 class CartItem(models.Model):
@@ -59,10 +59,10 @@ class Order(models.Model):
     client = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     phone = models.CharField(max_length=21)
     address = models.CharField(max_length=221)
-    note = models.TextField(null=True, blank=True)
+    note = models.CharField(null=True, blank=True, max_length=221)
     status = models.IntegerField(choices=STATUS, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'order of {self.client} | {self.transaction_id}'
+        return f'order of {self.client} (id: {self.id}) | {self.transaction_id}'
 

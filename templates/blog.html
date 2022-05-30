@@ -2,10 +2,6 @@
 {% load static %}
 {% block content %}
 
-    <style>
-
-    }
-    </style>
 <section class="hero hero-normal">
     <div class="container">
         <div class="row">
@@ -147,4 +143,16 @@
     </div>
 </section>
 
+
+
 {% endblock %}
+
+{% block scripts %}
+    <script>
+        $('.header__menu>ul>li').removeClass('active');
+        $('.blog_page').addClass('active');
+
+    </script>
+
+{% endblock %}
+

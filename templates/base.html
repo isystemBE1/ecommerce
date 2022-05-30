@@ -71,7 +71,7 @@
             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
             <li><a href="#"><i class="fa fa-shopping-bag"></i> <span></span></a></li>
         </ul>
-        <div class="header__cart__price">item: <span>$150.00</span></div>
+        <div class="header__cart__price">item: <span>{{ cart.get_cart_total }}</span></div>
     </div>
     <div class="humberger__menu__widget">
         <div class="header__top__right__language">
@@ -84,21 +84,17 @@
             </ul>
         </div>
         <div class="header__top__right__auth">
-            <a href="#"><i class="fa fa-user"></i> Login</a>
+            {% if request.user.is_authenticated %}
+                <a href="/accounts/logout/"><i class="fa fa-user"></i> Logout</a>
+            {% else %}
+                <a href="/accounts/login/"><i class="fa fa-user"></i> Login</a>
+            {% endif %}
         </div>
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
             <li class="active"><a href="/">Home</a></li>
             <li><a href="shop-grid.html">Shop</a></li>
-            <li><a href="#">Pages</a>
-                <ul class="header__menu__dropdown">
-                    <li><a href="shop-details.html">Shop Details</a></li>
-                    <li><a href="shoping-cart.html">Shoping Cart</a></li>
-                    <li><a href="checkout.html">Check Out</a></li>
-                    <li><a href="blog-details.html">Blog Details</a></li>
-                </ul>
-            </li>
             <li><a href="{% url 'blog:list' %}">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -155,7 +151,11 @@
                             </ul>
                         </div>
                         <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Login</a>
+                            {% if request.user.is_authenticated %}
+                                <a href="/accounts/profile/"><i class="fa fa-user"></i> Profile</a>
+                            {% else %}
+                                <a href="/accounts/login/"><i class="fa fa-user"></i> Login</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -174,8 +174,8 @@
                     <ul>
                         <li class="active"><a href="/">Home</a></li>
                         <li><a href="/shop-grid/">Shop</a></li>
-                        <li><a href="/blog/">Blog</a></li>
-                        <li><a href="/contact/">Contact</a></li>
+                        <li class="blog_page"><a href="/blog/">Blog</a></li>
+                        <li class="contact_page"><a href="/contact/">Contact</a></li>
                     </ul>
                 </nav>
             </div>
@@ -191,7 +191,7 @@
                             {% endif %}
                         </a></li>
                         <li>
-                            <a href="/cart/"><i class="fa fa-shopping-bag"></i>
+                            <a href="/carts/my-cart/"><i class="fa fa-shopping-bag"></i>
                                 {% if request.user.is_authenticated %}
                                     <span>{{ cart.get_cart_items }}</span>
                                 {% else %}
@@ -307,6 +307,7 @@
 <script>
 
 
+
     $('.add-wishlist').on('click', function () {
         let _pid = $(this).data('product')
         let _vm = $(this)
@@ -349,8 +350,54 @@
                 alert(res.product + ' added to cart')
                 location.reload()
             }
-        })
-    })
+        });
+    });
+
+    // update cart item quantity
+    $('.dec').on('click', function () {
+        let _ciid = $(this).next().data('cart_item_id');
+        $.ajax({
+            url: '/carts/minus-quantity/',
+            data: {
+                _ciid
+            },
+            dataType: 'json',
+            success: function (res) {
+                location.reload()
+            }
+        });
+    });
+
+
+    $('.inc').on('click', function () {
+        let _ciid = $(this).prev().data('cart_item_id');
+        $.ajax({
+            url: '/carts/plus-quantity/',
+            data: {
+                _ciid
+            },
+            dataType: 'json',
+            success: function (res) {
+                location.reload()
+            }
+        });
+    });
+
+
+    $('.icon_close').on('click', function () {
+        let _ciid = $(this).data('cart_item_id');
+        $.ajax({
+            url: '/carts/delete-cart-item-view/',
+            data: {
+                _ciid
+            },
+            dataType: 'json',
+            success: function (res) {
+                location.reload()
+            }
+        });
+    });
+
 
     window.dataLayer = window.dataLayer || [];
 
@@ -362,6 +409,10 @@
 
     gtag('config', 'UA-23581568-13');
 </script>
+
+{% block scripts %}
+
+{% endblock %}
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194"
         integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw=="
         data-cf-beacon='{"rayId":"709bfb76ca6d9932","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.12.0","si":100}'
